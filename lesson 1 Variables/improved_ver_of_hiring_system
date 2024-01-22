@@ -1,0 +1,107 @@
+#[derive(Debug)]
+enum Employee{
+    One,
+    Two,
+    Three,
+    Four,
+    Five
+}
+// gender selection enum
+#[derive(Debug)]
+#[derive(PartialEq)]
+enum Gender{
+    Male,  
+    Female,
+    NonBinary
+}
+#[derive(Debug)]
+struct Person{
+    name: Employee,
+    age: i32,
+    years_of_exp: i32,
+    projects: i32,
+    married: bool,
+    sex: Gender
+}
+fn print_who(person: &Person) {
+    match person.name {
+        Employee::One => println!("This employee's name is: Bob"),
+        Employee::Two => println!("This employee's name is: Sally"),
+        Employee::Three => println!("This employee's name is: Allen"),
+        Employee::Four => println!("This employee's name is: Brim"),
+        Employee::Five => println!("This employee's name is: Danny"),
+    }
+    println!("This employee is {:?}", person.sex);
+    println!("This employee age is {}", person.age);
+    println!("This employee years of experience {}", person.years_of_exp);
+    println!("This employee has worked on these numbers of projects {}", person.projects);
+    println!("This employee has been married? {}", person.married);
+}
+    fn main(){
+    let mut people = [
+        Person{ name:Employee::One, age: 32, years_of_exp: 10, projects: 38, married: true, sex: Gender::Male },
+        Person{ name:Employee::Two, age: 22, years_of_exp: 4, projects: 16, married: false, sex: Gender::Female},
+        Person{ name:Employee::Three, age: 28, years_of_exp: 7, projects: 85, married: false, sex: Gender::NonBinary },
+        Person{ name:Employee::Four, age: 48, years_of_exp: 28, projects: 384 , married: true, sex: Gender::Male },
+        Person{ name:Employee::Five, age: 37, years_of_exp: 19, projects: 231, married: true, sex: Gender::Male }
+    ];
+    // let _slice = &vec![1 .. 4];
+    
+    // for person in &mut people{
+    //     if person.age < 40 && person.years_of_exp > 15 && person.projects > 50 && person.married == true{
+    //         println!("Congrats!!! This employee is passed");
+    //         print_who(&person);
+    //     }
+    //     else if person.age > 40 && person.years_of_exp > 18 || person.projects > 90 && person. married == false {
+    //         println!("Also, this person can be employed. But not 100%");
+    //         print_who(&person);
+    //     }else { let _non_or_some = person.sex = Gender::NonBinary;
+    //         println!("This person cannot be emlpoyed");
+    //         print_who(&person);
+    //     }
+    // }
+
+    // for person in people {
+    //     match(
+    //         person.age < 40 && person.years_of_exp > 15 && person.projects > 50 && person.married == true,
+    //         person.age > 40 && person.years_of_exp > 18 || person.projects > 90 && person. married == false,
+    //         person.sex != Gender::Male && person.sex != Gender::Female
+    //     ) {
+    //         (true, _ , _) => {
+    //             println!("Congrats!!! He/She passed.");
+    //             print_who(&person);
+    //         }
+    //         (_ , true, _ ) => {
+    //             println!("This person can be emplyed. But not 100%");
+    //             print_who(&person);
+    //         }
+    //         (_, _, true ) => {
+    //             println!("FUCK U. Go back to ur Home");
+    //             print_who(&person)
+    //         }
+    //         _ => {
+    //             println!("This person cannot be employed");
+    //             print_who(&person);
+    //         }
+    //     }
+    // }
+
+    for person in &mut people{
+        let ( congrats, can_be_eployed, cannot_be_employed ) = (
+             person.age < 40 && person.years_of_exp > 15 && person.projects > 50 && person.married,
+            person.age > 40 && person.years_of_exp > 18 || person.projects > 90 && !person.married,
+            person.sex == Gender::NonBinary,
+        );
+        if congrats{
+            println!("Congrats He/She passed!!!");
+        }
+        else if can_be_eployed{
+            println!("He/She can be employed 'cause of some reasons.");
+        }
+        else if cannot_be_employed{
+            println!("Fuck you! just stay away from us!");
+        }
+        print_who(person);
+    }
+    
+}
